@@ -93,4 +93,44 @@ pokemonsRouter.post("/", async (req, res) => {
   }
 });
 
+pokemonsRouter.get("/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    //Verifico que el id no incluya guiones y que sea un Number y lo traigo de el endpoint de la API
+    if (!id.includes("-") && id * 1 === Number(id)) {
+      const pokemonApi = await axios.get(
+        `https://pokeapi.co/api/v2/pokemon/${id}`
+      );
+      const pokemonApi2 = {
+        id: pokemonApi.data.id,
+        name: pokemonApi.data.name,
+        hp: pokemonApi.data.stats[0].base_stat,
+        attack: pokemonApi.data.stats[1].base_stat,
+        defense: pokemonApi.data.stats[2].base_stat,
+        speed: pokemonApi.data.stats[5].base_stat,
+        height: pokemonApi.data.height,
+        weight: pokemonApi.data.weight,
+        img: pokemonApi.data.sprites.other.dream_world.front_default,
+        types: pokemonApi.data.types.map((type) => {
+          return {
+            name: type.type.name,
+          };
+        }),
+      };
+      res.status(200).send(pokemonApi2);
+    } else {
+      //sino lo busco en la base de datos
+      const db = await Pokemon.findByPk(id, {
+        include: {
+          model: Type,
+          attributes: ["name"],
+        },
+      });
+      res.status(200).send(db);
+    }
+  } catch (error) {
+    res.status(404).send("Not Found");
+  }
+});
+
 module.exports = pokemonsRouter;
