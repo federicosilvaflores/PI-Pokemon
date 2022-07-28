@@ -1,21 +1,57 @@
 import React from "react";
+//importo los hooks que voy a usar de react
 import { useState, useEffect } from "react";
+//importo los hooks de react-redux
 import { useDispatch, useSelector } from "react-redux";
-import { getPokemons } from "../actions";
+//importo las actions que voy a usar en este componente
+import {
+  getPokemons,
+  getTypes,
+  filterPokemonsByType,
+  filterPokemonsByCreated,
+  orderBy,
+} from "../actions";
 import { Link } from "react-router-dom";
+//importo los componentes que voy a usar
 import Card from "./Card";
+import SearchBar from "./SearchBar";
 
+
+
+//COMIENZO EL COMPONENTE
 export default function Home() {
   const dispatch = useDispatch();
-  const allPokemons = useSelector((state) => state.pokemons);
+  const pokemons = useSelector((state) => state.pokemons);
+  const allTypes = useSelector((state) => state.types);
+  const [orden, setOrden] = useState("");
 
   useEffect(() => {
     dispatch(getPokemons());
   }, [dispatch]);
 
-  function handleClick(e) {
+  useEffect(() => {
+    dispatch(getTypes());
+  }, [dispatch]);
+
+  function handleClickReload(e) {
     e.preventDefault();
-    dispatch(getPokemons());
+    window.location.reload();
+  }
+
+  function handleFilterType(e) {
+    e.preventDefault();
+    dispatch(filterPokemonsByType(e.target.value));
+  }
+
+  function handleFilterCreated(e) {
+    e.preventDefault();
+    dispatch(filterPokemonsByCreated(e.target.value));
+  }
+
+  function handleSort(e) {
+    e.preventDefault();
+    dispatch(orderBy(e.target.value));
+    setOrden(`Ordenado ${e.target.value}`);
   }
 
   return (
@@ -24,35 +60,58 @@ export default function Home() {
       <h1>PAGINA DE POKEMONS</h1>
       <button
         onClick={(e) => {
-          handleClick(e);
+          handleClickReload(e);
         }}
       >
-        Vover a cargar Pokemons
+        Recargar
       </button>
+      <SearchBar />
       <div>
-        <select>
-          <option value="asc">Ascendente</option>
-          <option value="desc">Descendente</option>
+        <label htmlFor="ordenamiento">Ordenar:</label>
+        <select onChange={(e) => handleSort(e)} defaultValue="opcionimaginaria">
+          <option value="opcionimaginaria" disabled>
+            Alfabeticamente/Por Ataque
+          </option>
+          <optgroup label="Alfabeticamente">
+            <option value="AtoZ">A - Z</option>
+            <option value="ZtoA">Z - A</option>
+          </optgroup>
+          <optgroup label="Por Ataque">
+            <option value="mayorAMenor">Mayor a menor</option>
+            <option value="menorAmayor">Menor a mayor</option>
+          </optgroup>
         </select>
-        <select>
-          <option value="ver">Aca van options de los tipos de pokemon</option>
-        </select>
-        <select>
-          <option value="Todos">Todos</option>
-          <option value="Creados">Creados</option>
-          <option value="Api">De la API</option>
-        </select>
-        {allPokemons &&
-          allPokemons.map((pokemon) => {
+        <label htmlFor="filtroPorTipo">Filtar por Tipo:</label>
+        <select onChange={(e) => handleFilterType(e)}>
+          <option value="All">Todos</option>
+          {allTypes?.map((type) => {
             return (
-              <Link to={"/home/" + pokemon.id}>
-                <Card
-                  key={pokemon.id}
-                  name={pokemon.name}
-                  img={pokemon.img}
-                  types={pokemon.types}
-                />
-              </Link>
+              <option key={type.name} value={type.name}>
+                {type.name[0].toUpperCase() + type.name.substring(1)}
+              </option>
+            );
+          })}
+        </select>
+        <label htmlFor="filtroPorCreados">
+          Filtrar por existentes o creados:
+        </label>
+        <select name="created" onChange={(e) => handleFilterCreated(e)}>
+          <option value="All">Todos</option>
+          <option value="created">Creados</option>
+          <option value="api">Existentes</option>
+        </select>
+        {pokemons &&
+          pokemons.map((pokemon) => {
+            return (
+              <div key={pokemon.id}>
+                <Link to={"/home/" + pokemon.id}>
+                  <Card
+                    name={pokemon.name}
+                    img={pokemon.img}
+                    types={pokemon.types}
+                  />
+                </Link>
+              </div>
             );
           })}
       </div>

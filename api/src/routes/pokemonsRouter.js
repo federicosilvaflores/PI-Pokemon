@@ -7,9 +7,9 @@ const pokemonsRouter = Router();
 
 pokemonsRouter.get("/", async (req, res) => {
   const { name } = req.query;
-  const totalInfo = await getTotalInfo();
   try {
     //Si no recibo name por query
+    const totalInfo = await getTotalInfo();
     if (!name) {
       res.status(200).send(totalInfo);
     }
@@ -30,29 +30,31 @@ pokemonsRouter.get("/", async (req, res) => {
         const pokemonApi = await axios.get(
           `https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`
         );
-        const pokemonApi2 = {
-          id: pokemonApi.data.id,
-          name: pokemonApi.data.name,
-          hp: pokemonApi.data.stats[0].base_stat,
-          attack: pokemonApi.data.stats[1].base_stat,
-          defense: pokemonApi.data.stats[2].base_stat,
-          speed: pokemonApi.data.stats[5].base_stat,
-          height: pokemonApi.data.height,
-          weight: pokemonApi.data.weight,
-          img: pokemonApi.data.sprites.other.dream_world.front_default,
-          types: pokemonApi.data.types.map((type) => {
-            return {
-              name: type.type.name,
-            };
-          }),
-        };
+        const pokemonApi2 = [
+          {
+            id: pokemonApi.data.id,
+            name: pokemonApi.data.name,
+            hp: pokemonApi.data.stats[0].base_stat,
+            attack: pokemonApi.data.stats[1].base_stat,
+            defense: pokemonApi.data.stats[2].base_stat,
+            speed: pokemonApi.data.stats[5].base_stat,
+            height: pokemonApi.data.height,
+            weight: pokemonApi.data.weight,
+            img: pokemonApi.data.sprites.other.dream_world.front_default,
+            types: pokemonApi.data.types.map((type) => {
+              return {
+                name: type.type.name,
+              };
+            }),
+          },
+        ];
         res.status(200).send(pokemonApi2);
       }
     }
     //Atrapo el error 404 y mando la respuesta
   } catch (error) {
-    //console.log(error.response.statusText);
-    res.status(404).send(error.response.statusText);
+    //console.log(error);
+    res.status(404).send("Not Found");
   }
 });
 
