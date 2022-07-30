@@ -10,20 +10,38 @@ import {
   filterPokemonsByType,
   filterPokemonsByCreated,
   orderBy,
+  getCleanFiltersStates,
 } from "../actions";
 import { Link } from "react-router-dom";
 //importo los componentes que voy a usar
 import Card from "./Card";
 import SearchBar from "./SearchBar";
-
-
+import Paginado from "./Paginado";
 
 //COMIENZO EL COMPONENTE
 export default function Home() {
   const dispatch = useDispatch();
   const pokemons = useSelector((state) => state.pokemons);
   const allTypes = useSelector((state) => state.types);
+  const loaderInicial = useSelector((state) => state.loaderInicial);
+  const pokemonsPorTipo = useSelector((state) => state.filterByType);
+  const pokemonsCreados = useSelector((state) => state.filterByCreated);
   const [orden, setOrden] = useState("");
+
+  //  Paginado
+  const [currentPage, setCurrentPage] = useState(1);
+  const pokemonsPerPage = 12;
+  const indexOfLastPokemon = currentPage * pokemonsPerPage;
+  const indexOfFirstPokemon = indexOfLastPokemon - pokemonsPerPage;
+  const currentPokemons = pokemons.slice(
+    indexOfFirstPokemon,
+    indexOfLastPokemon
+  );
+  // /Paginado
+
+  function paginado(pageNumber) {
+    setCurrentPage(pageNumber);
+  }
 
   useEffect(() => {
     dispatch(getPokemons());
@@ -31,6 +49,7 @@ export default function Home() {
 
   useEffect(() => {
     dispatch(getTypes());
+    return () => dispatch(getCleanFiltersStates());
   }, [dispatch]);
 
   function handleClickReload(e) {
@@ -53,6 +72,9 @@ export default function Home() {
     dispatch(orderBy(e.target.value));
     setOrden(`Ordenado ${e.target.value}`);
   }
+
+  console.log("Current pokemons:", currentPokemons);
+  console.log("Estado de pokemons de Redux:", pokemons);
 
   return (
     <div>
@@ -100,7 +122,27 @@ export default function Home() {
           <option value="created">Creados</option>
           <option value="api">Existentes</option>
         </select>
-        {pokemons &&
+
+        <Paginado
+          pokemonsPerPage={pokemonsPerPage}
+          pokemons={pokemons.length}
+          paginado={paginado}
+        ></Paginado>
+        {currentPokemons.length !== 0 ? (
+          currentPokemons.map((pokemon) => {
+            return (
+              <div key={pokemon.id}>
+                <Link to={"/home/" + pokemon.id}>
+                  <Card
+                    name={pokemon.name}
+                    img={pokemon.img}
+                    types={pokemon.types}
+                  />
+                </Link>
+              </div>
+            );
+          })
+        ) : currentPokemons.length === 0 && pokemons.length > 0 ? (
           pokemons.map((pokemon) => {
             return (
               <div key={pokemon.id}>
@@ -113,7 +155,28 @@ export default function Home() {
                 </Link>
               </div>
             );
-          })}
+          })
+        ) : (
+          <p></p>
+        )}
+
+        <Paginado
+          pokemonsPerPage={pokemonsPerPage}
+          pokemons={pokemons.length}
+          paginado={paginado}
+        ></Paginado>
+
+        {loaderInicial === true ? <p>Cargando...</p> : <p></p>}
+        {pokemonsPorTipo === "No hay pokemons con ese tipo" ? (
+          <p>No se encontraron pokemons</p>
+        ) : (
+          <p></p>
+        )}
+        {pokemonsCreados === "No hay pokemons creados" ? (
+          <p>Todavia no se han creado pokemons</p>
+        ) : (
+          <p></p>
+        )}
       </div>
     </div>
   );

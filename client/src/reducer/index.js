@@ -6,12 +6,19 @@ import {
   ORDER_BY,
   GET_NAME_POKEMONS,
   POST_POKEMON,
+  GET_DETAIL,
+  GET_CLEAN_DETAIL_STATE,
 } from "../actions";
 
 const initialState = {
   pokemons: [],
   types: [],
   allPokemons: [],
+  detail: [],
+  errorDeDetail: "",
+  loaderInicial: true,
+  filterByType: "",
+  filterByCreated: "",
 };
 
 function rootReducer(state = initialState, action) {
@@ -21,6 +28,7 @@ function rootReducer(state = initialState, action) {
         ...state,
         pokemons: action.payload,
         allPokemons: action.payload,
+        loaderInicial: state.pokemons === [] ? true : false,
       };
     case GET_TYPES:
       return {
@@ -42,10 +50,11 @@ function rootReducer(state = initialState, action) {
             });
       return {
         ...state,
-        pokemons:
-          statusFiltered.length === 0
-            ? alert("No se encontraron pokemons con ese tipo")
-            : statusFiltered,
+        pokemons: statusFiltered,
+        filterByType:
+          statusFiltered.length !== 0
+            ? "Hay pokemons con ese tipo"
+            : "No hay pokemons con ese tipo",
       };
     case FILTER_BY_CREATED:
       const createdFilter =
@@ -55,6 +64,10 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         pokemons: action.payload === "All" ? state.allPokemons : createdFilter,
+        filterByCreated:
+          createdFilter.length === 0
+            ? "No hay pokemons creados"
+            : "Hay pokemons creados",
       };
     case ORDER_BY:
       var sortedArr;
@@ -115,6 +128,32 @@ function rootReducer(state = initialState, action) {
     case POST_POKEMON:
       return {
         ...state,
+      };
+    case GET_DETAIL:
+      return {
+        ...state,
+        detail: action.payload,
+      };
+    case GET_CLEAN_DETAIL_STATE:
+      return {
+        ...state,
+        detail: action.payload,
+      };
+    case "DETAIL_ERROR":
+      return {
+        ...state,
+        errorDeDetail: action.payload,
+      };
+    case "GET_CLEAN_ERROR_DETAIL_STATE":
+      return {
+        ...state,
+        errorDeDetail: action.payload,
+      };
+    case "GET_CLEAN_FILTERS_STATE":
+      return {
+        ...state,
+        filterByCreated: action.payload,
+        filterByType: action.payload,
       };
     default:
       return state;
