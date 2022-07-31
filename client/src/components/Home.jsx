@@ -54,20 +54,24 @@ export default function Home() {
 
   function handleClickReload(e) {
     e.preventDefault();
+    setCurrentPage(1);
     window.location.reload();
   }
 
   function handleFilterType(e) {
     e.preventDefault();
+    setCurrentPage(1);
     dispatch(filterPokemonsByType(e.target.value));
   }
 
   function handleFilterCreated(e) {
+    setCurrentPage(1);
     e.preventDefault();
     dispatch(filterPokemonsByCreated(e.target.value));
   }
 
   function handleSort(e) {
+    setCurrentPage(1);
     e.preventDefault();
     dispatch(orderBy(e.target.value));
     setOrden(`Ordenado ${e.target.value}`);
@@ -75,6 +79,7 @@ export default function Home() {
 
   console.log("Current pokemons:", currentPokemons);
   console.log("Estado de pokemons de Redux:", pokemons);
+  console.log("current page:", currentPage);
 
   return (
     <div>
@@ -99,8 +104,8 @@ export default function Home() {
             <option value="ZtoA">Z - A</option>
           </optgroup>
           <optgroup label="Por Ataque">
-            <option value="mayorAMenor">Mayor a menor</option>
-            <option value="menorAmayor">Menor a mayor</option>
+            <option value="mayorAMenor">Más fuerte a más débil</option>
+            <option value="menorAmayor">Más débil a más fuerte</option>
           </optgroup>
         </select>
         <label htmlFor="filtroPorTipo">Filtar por Tipo:</label>
@@ -122,43 +127,26 @@ export default function Home() {
           <option value="created">Creados</option>
           <option value="api">Existentes</option>
         </select>
+        <p>Pag. {currentPage}</p>
 
         <Paginado
           pokemonsPerPage={pokemonsPerPage}
           pokemons={pokemons.length}
           paginado={paginado}
         ></Paginado>
-        {currentPokemons.length !== 0 ? (
-          currentPokemons.map((pokemon) => {
-            return (
-              <div key={pokemon.id}>
-                <Link to={"/home/" + pokemon.id}>
-                  <Card
-                    name={pokemon.name}
-                    img={pokemon.img}
-                    types={pokemon.types}
-                  />
-                </Link>
-              </div>
-            );
-          })
-        ) : currentPokemons.length === 0 && pokemons.length > 0 ? (
-          pokemons.map((pokemon) => {
-            return (
-              <div key={pokemon.id}>
-                <Link to={"/home/" + pokemon.id}>
-                  <Card
-                    name={pokemon.name}
-                    img={pokemon.img}
-                    types={pokemon.types}
-                  />
-                </Link>
-              </div>
-            );
-          })
-        ) : (
-          <p></p>
-        )}
+        {currentPokemons?.map((pokemon) => {
+          return (
+            <div key={pokemon.id}>
+              <Link to={"/home/" + pokemon.id}>
+                <Card
+                  name={pokemon.name}
+                  img={pokemon.img}
+                  types={pokemon.types}
+                />
+              </Link>
+            </div>
+          );
+        })}
 
         <Paginado
           pokemonsPerPage={pokemonsPerPage}
