@@ -63,6 +63,10 @@ export function getNamePokemons(name) {
     } catch (error) {
       console.log(error);
       alert("Pokemon no encontrado");
+      return dispatch({
+        type: "ERROR_POKEMON_NOT_FOUND",
+        payload: false,
+      });
     }
   };
 }
@@ -109,5 +113,12 @@ export function getCleanFiltersStates() {
   return {
     type: "GET_CLEAN_FILTERS_STATE",
     payload: "",
+  };
+}
+
+export function getCleanStatePokemonsOnSearch() {
+  return {
+    type: "GET_CLEAN_STATE_POKEMONS_ON_SEARCH",
+    payload: [],
   };
 }

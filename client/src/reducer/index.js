@@ -28,7 +28,7 @@ function rootReducer(state = initialState, action) {
         ...state,
         pokemons: action.payload,
         allPokemons: action.payload,
-        loaderInicial: state.pokemons === [] ? true : false,
+        loaderInicial: state.pokemons.length === [] ? true : false,
       };
     case GET_TYPES:
       return {
@@ -124,6 +124,7 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         pokemons: action.payload,
+        loaderInicial: state.pokemons.length === [] ? true : false,
       };
     case POST_POKEMON:
       return {
@@ -154,6 +155,17 @@ function rootReducer(state = initialState, action) {
         ...state,
         filterByCreated: action.payload,
         filterByType: action.payload,
+      };
+    case "GET_CLEAN_STATE_POKEMONS_ON_SEARCH":
+      return {
+        ...state,
+        pokemons: action.payload,
+        loaderInicial: true,
+      };
+    case "ERROR_POKEMON_NOT_FOUND":
+      return {
+        ...state,
+        loaderInicial: action.payload,
       };
     default:
       return state;

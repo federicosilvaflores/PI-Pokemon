@@ -170,6 +170,7 @@ export default function PokemonCreate() {
     e.preventDefault();
     if (input.name && Object.entries(errors).length === 0) {
       try {
+        // eslint-disable-next-line no-unused-vars
         var json = await axios.get(
           "http://localhost:3001/pokemons?name=" + input.name
         );

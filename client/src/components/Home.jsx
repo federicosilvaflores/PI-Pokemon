@@ -1,3 +1,5 @@
+import s from "./Home.module.css";
+import logo from "../images/pokemonLogo.png";
 import React from "react";
 //importo los hooks que voy a usar de react
 import { useState, useEffect } from "react";
@@ -76,68 +78,93 @@ export default function Home() {
     dispatch(orderBy(e.target.value));
     setOrden(`Ordenado ${e.target.value}`);
   }
-
-  console.log("Current pokemons:", currentPokemons);
-  console.log("Estado de pokemons de Redux:", pokemons);
-  console.log("current page:", currentPage);
+  console.log(orden);
+  //console.log("Current pokemons:", currentPokemons);
+  //console.log("Estado de pokemons de Redux:", pokemons);
+  //console.log("current page:", currentPage);
 
   return (
     <div>
-      <Link to="/pokemon">Crear Pokemon</Link>
-      <h1>PAGINA DE POKEMONS</h1>
-      <button
-        onClick={(e) => {
-          handleClickReload(e);
-        }}
-      >
-        Recargar
-      </button>
-      <SearchBar />
-      <div>
-        <label htmlFor="ordenamiento">Ordenar:</label>
-        <select onChange={(e) => handleSort(e)} defaultValue="opcionimaginaria">
-          <option value="opcionimaginaria" disabled>
-            Alfabeticamente/Por Ataque
-          </option>
-          <optgroup label="Alfabeticamente">
-            <option value="AtoZ">A - Z</option>
-            <option value="ZtoA">Z - A</option>
-          </optgroup>
-          <optgroup label="Por Ataque">
-            <option value="mayorAMenor">Más fuerte a más débil</option>
-            <option value="menorAmayor">Más débil a más fuerte</option>
-          </optgroup>
-        </select>
-        <label htmlFor="filtroPorTipo">Filtar por Tipo:</label>
-        <select onChange={(e) => handleFilterType(e)}>
-          <option value="All">Todos</option>
-          {allTypes?.map((type) => {
-            return (
-              <option key={type.name} value={type.name}>
-                {type.name[0].toUpperCase() + type.name.substring(1)}
-              </option>
-            );
-          })}
-        </select>
-        <label htmlFor="filtroPorCreados">
-          Filtrar por existentes o creados:
-        </label>
-        <select name="created" onChange={(e) => handleFilterCreated(e)}>
-          <option value="All">Todos</option>
-          <option value="created">Creados</option>
-          <option value="api">Existentes</option>
-        </select>
-        <p>Pag. {currentPage}</p>
+      <div className={s.divContenedorHome}>
+        <div className={s.divTitulo}>
+          <button
+            className={s.buttonReload}
+            onClick={(e) => {
+              handleClickReload(e);
+            }}
+          >
+            🗘 Recargar
+          </button>
+          <img className={s.titulo} src={logo} alt="" />
 
-        <Paginado
-          pokemonsPerPage={pokemonsPerPage}
-          pokemons={pokemons.length}
-          paginado={paginado}
-        ></Paginado>
+          <Link className={s.crearPokemon} to="/pokemon">
+            CREA TU POKEMON
+          </Link>
+        </div>
+
+        <div className={s.divOrdenyFiltros}>
+          <select
+            onChange={(e) => handleSort(e)}
+            defaultValue="opcionimaginaria"
+          >
+            <option id={s.ordenar} value="opcionimaginaria" disabled>
+              Ordenar
+            </option>
+            <optgroup label="Alfabeticamente">
+              <option value="AtoZ">A - Z</option>
+              <option value="ZtoA">Z - A</option>
+            </optgroup>
+            <optgroup label="Por Ataque">
+              <option value="mayorAMenor">Más fuerte a más débil</option>
+              <option value="menorAmayor">Más débil a más fuerte</option>
+            </optgroup>
+          </select>
+
+          <select
+            onChange={(e) => handleFilterType(e)}
+            defaultValue="opcionimaginaria"
+          >
+            <option id={s.ordenar} value="opcionimaginaria" disabled>
+              Filtrar por tipo
+            </option>
+            <option value="All">Todos</option>
+            {allTypes?.map((type) => {
+              return (
+                <option key={type.name} value={type.name}>
+                  {type.name[0].toUpperCase() + type.name.substring(1)}
+                </option>
+              );
+            })}
+          </select>
+
+          <select
+            defaultValue="opcionimaginaria"
+            name="created"
+            onChange={(e) => handleFilterCreated(e)}
+          >
+            <option id={s.ordenar} value="opcionimaginaria" disabled>
+              Filtrar por creados
+            </option>
+            <option value="All">Todos</option>
+            <option value="created">Creados</option>
+            <option value="api">Existentes</option>
+          </select>
+        </div>
+
+        <SearchBar setCurrentPage={setCurrentPage} currentPage={currentPage} />
+      </div>
+      <div className={s.divCards}>
+        {loaderInicial === true ? (
+          <p>
+            <div className={s.loader}></div>
+          </p>
+        ) : (
+          <p></p>
+        )}
         {currentPokemons?.map((pokemon) => {
           return (
             <div key={pokemon.id}>
-              <Link to={"/home/" + pokemon.id}>
+              <Link target="_blank" to={"/home/" + pokemon.id}>
                 <Card
                   name={pokemon.name}
                   img={pokemon.img}
@@ -148,23 +175,25 @@ export default function Home() {
           );
         })}
 
-        <Paginado
-          pokemonsPerPage={pokemonsPerPage}
-          pokemons={pokemons.length}
-          paginado={paginado}
-        ></Paginado>
-
-        {loaderInicial === true ? <p>Cargando...</p> : <p></p>}
         {pokemonsPorTipo === "No hay pokemons con ese tipo" ? (
-          <p>No se encontraron pokemons</p>
+          <p className={s.error}>No se encontraron pokemons</p>
         ) : (
           <p></p>
         )}
         {pokemonsCreados === "No hay pokemons creados" ? (
-          <p>Todavia no se han creado pokemons</p>
+          <p className={s.error}>Todavia no se han creado pokemons</p>
         ) : (
           <p></p>
         )}
+      </div>
+      <Paginado
+        pokemonsPerPage={pokemonsPerPage}
+        pokemons={pokemons.length}
+        paginado={paginado}
+      ></Paginado>
+
+      <div className={s.numeroDePagina}>
+        <p className={s.pNumPag}>Pag. {currentPage}</p>
       </div>
     </div>
   );
