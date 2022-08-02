@@ -62,9 +62,7 @@ export default function Detail(props) {
           <h5 className={s.tiposEstadisticasEtc}>Peso: {myPokemon.weight}</h5>
         </div>
       ) : errorDeDetail === "" ? (
-        <p>
-          <div className={s.loader}></div>
-        </p>
+        <div className={s.loader}></div>
       ) : (
         <p className={s.error}>No existe pokemon con ese ID</p>
       )}

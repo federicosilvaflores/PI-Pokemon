@@ -111,6 +111,8 @@ export default function PokemonCreate() {
   const types = useSelector((state) => state.types);
   const history = useHistory();
 
+  const [loader, setLoader] = useState("NO");
+
   const [input, setInput] = useState({
     name: "",
     hp: "",
@@ -169,17 +171,21 @@ export default function PokemonCreate() {
   async function handleSubmit(e) {
     e.preventDefault();
     if (input.name && Object.entries(errors).length === 0) {
+      setLoader("SI");
       try {
         // eslint-disable-next-line no-unused-vars
         var json = await axios.get(
           "http://localhost:3001/pokemons?name=" + input.name
         );
-        return alert(
-          "Ya existe un pokemon con ese nombre, por favor, elija otro"
-        );
-      } catch (error) {}
+        alert("Ya existe un pokemon con ese nombre, por favor, elija otro");
+        setLoader("NO");
+        return;
+      } catch (error) {
+        console.log(error);
+      }
 
       dispatch(postPokemon(input));
+      setLoader("NO");
       alert("Pokemon creado exitosamente");
       setInput({
         name: "",
@@ -316,6 +322,7 @@ export default function PokemonCreate() {
           Crear Pokemon
         </button>
       </form>
+      {loader === "SI" ? <p>Cargando...</p> : <p></p>}
     </div>
   );
 }

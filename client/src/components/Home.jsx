@@ -154,13 +154,7 @@ export default function Home() {
         <SearchBar setCurrentPage={setCurrentPage} currentPage={currentPage} />
       </div>
       <div className={s.divCards}>
-        {loaderInicial === true ? (
-          <p>
-            <div className={s.loader}></div>
-          </p>
-        ) : (
-          <p></p>
-        )}
+        {loaderInicial === true ? <div className={s.loader}></div> : <p></p>}
         {currentPokemons?.map((pokemon) => {
           return (
             <div key={pokemon.id}>

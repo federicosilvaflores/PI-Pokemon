@@ -21,7 +21,7 @@
     font-weight: bolder;
     color: #8a8989;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    margin:25px 0 0 0 
+    margin:25px 0 25px 0 
 }
 
 .divCard:hover {
@@ -69,6 +69,7 @@ h1,h5,h6{
     width: 50px;
     height: 50px;
     position: relative;
+    margin: 40px 40px 40px 40px
 }
 
 .loader:before,
