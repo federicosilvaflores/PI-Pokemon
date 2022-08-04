@@ -3,6 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import { postPokemon, getTypes } from "../actions/index";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
+import s from "./PokemonCreate.module.css";
 
 function validate(input) {
   let errors = {};
@@ -215,114 +216,138 @@ export default function PokemonCreate() {
   }, [dispatch]);
 
   return (
-    <div>
-      <Link to="/home">
-        <button>Volver</button>
-      </Link>
-      <h1>Crea tu Pokemon</h1>
+    <div className={s.divContenedor}>
+      <h1 className={s.titulo}>Crea tu Pokemon</h1>
       <form onSubmit={(e) => handleSubmit(e)}>
-        <div>
-          <label>Nombre:</label>
-          <input
-            onChange={(e) => handleChange(e)}
-            type="text"
-            value={input.name}
-            name="name"
-          />
-          {errors.name && <p>{errors.name}</p>}
+        <div className={s.div3}>
+          <div className={s.div1}>
+            <div>
+              <label className={s.label}>Nombre:</label>
+              <input
+                className={s.inputs}
+                onChange={(e) => handleChange(e)}
+                type="text"
+                value={input.name}
+                name="name"
+              />
+              {errors.name && <p className={s.errores}>{errors.name}</p>}
+            </div>
+            <div>
+              <label className={s.label}>HP:</label>
+              <input
+                className={s.inputs}
+                onChange={(e) => handleChange(e)}
+                type="number"
+                value={input.hp}
+                name="hp"
+              />
+              {errors.hp && <p className={s.errores}>{errors.hp}</p>}
+            </div>
+            <div>
+              <label className={s.label}>Ataque:</label>
+              <input
+                className={s.inputs}
+                onChange={(e) => handleChange(e)}
+                type="number"
+                value={input.attack}
+                name="attack"
+              />
+              {errors.attack && <p className={s.errores}>{errors.attack}</p>}
+            </div>
+            <div>
+              <label className={s.label}>Defensa:</label>
+              <input
+                className={s.inputs}
+                onChange={(e) => handleChange(e)}
+                type="number"
+                value={input.defense}
+                name="defense"
+              />
+              {errors.defense && <p className={s.errores}>{errors.defense}</p>}
+            </div>
+            <div>
+              <label className={s.label}>Velocidad:</label>
+              <input
+                className={s.inputs}
+                onChange={(e) => handleChange(e)}
+                type="number"
+                value={input.speed}
+                name="speed"
+              />
+              {errors.speed && <p className={s.errores}>{errors.speed}</p>}
+            </div>
+            <div>
+              <label className={s.label}>Altura:</label>
+              <input
+                className={s.inputs}
+                onChange={(e) => handleChange(e)}
+                type="number"
+                value={input.height}
+                name="height"
+              />
+              {errors.height && <p className={s.errores}>{errors.height}</p>}
+            </div>
+            <div>
+              <label className={s.label}>Peso:</label>
+              <input
+                className={s.inputs}
+                onChange={(e) => handleChange(e)}
+                type="number"
+                value={input.weight}
+                name="weight"
+              />
+              {errors.weight && <p className={s.errores}>{errors.weight}</p>}
+            </div>
+            <div>
+              <label className={s.label}>Imagen:</label>
+              <input
+                className={s.inputs}
+                onChange={(e) => handleChange(e)}
+                type="text"
+                value={input.img}
+                name="img"
+              />
+              {errors.img && <p className={s.errores}>{errors.img}</p>}
+            </div>
+          </div>
+          <div>
+            <div className={s.div2}>
+              <div className={s.elegi}>
+                <p id={s.pDeElegi}>Elegí uno o dos tipos:</p>
+              </div>
+              {types?.map((type) => {
+                return (
+                  <label id={s.idChecks} className={s.label} key={type.name}>
+                    <input
+                      onChange={(e) => handleCheck(e)}
+                      type="checkbox"
+                      name={type.name}
+                      value={type.name}
+                    />
+                    {type.name[0].toUpperCase() + type.name.substring(1)}
+                  </label>
+                );
+              })}
+              {errors.types && <p className={s.errores}>{errors.types}</p>}
+            </div>
+          </div>
         </div>
-        <div>
-          <label>HP:</label>
-          <input
-            onChange={(e) => handleChange(e)}
-            type="number"
-            value={input.hp}
-            name="hp"
-          />
-          {errors.hp && <p>{errors.hp}</p>}
+        <div className={s.divBotonCrear}>
+          <button
+            className={s.buttonCrear}
+            disabled={handleActivateButton()}
+            type="submit"
+          >
+            Crear Pokemon
+          </button>
         </div>
-        <div>
-          <label>Ataque:</label>
-          <input
-            onChange={(e) => handleChange(e)}
-            type="number"
-            value={input.attack}
-            name="attack"
-          />
-          {errors.attack && <p>{errors.attack}</p>}
-        </div>
-        <div>
-          <label>Defensa:</label>
-          <input
-            onChange={(e) => handleChange(e)}
-            type="number"
-            value={input.defense}
-            name="defense"
-          />
-          {errors.defense && <p>{errors.defense}</p>}
-        </div>
-        <div>
-          <label>Velocidad:</label>
-          <input
-            onChange={(e) => handleChange(e)}
-            type="number"
-            value={input.speed}
-            name="speed"
-          />
-          {errors.speed && <p>{errors.speed}</p>}
-        </div>
-        <div>
-          <label>Altura:</label>
-          <input
-            onChange={(e) => handleChange(e)}
-            type="number"
-            value={input.height}
-            name="height"
-          />
-          {errors.height && <p>{errors.height}</p>}
-        </div>
-        <div>
-          <label>Peso:</label>
-          <input
-            onChange={(e) => handleChange(e)}
-            type="number"
-            value={input.weight}
-            name="weight"
-          />
-          {errors.weight && <p>{errors.weight}</p>}
-        </div>
-        <div>
-          <label>Imagen:</label>
-          <input
-            onChange={(e) => handleChange(e)}
-            type="text"
-            value={input.img}
-            name="img"
-          />
-          {errors.img && <p>{errors.img}</p>}
-        </div>
-        <div>
-          <p>Tipo/s:</p>
-          {types?.map((type) => {
-            return (
-              <label key={type.name}>
-                <input
-                  onChange={(e) => handleCheck(e)}
-                  type="checkbox"
-                  name={type.name}
-                  value={type.name}
-                />
-                {type.name[0].toUpperCase() + type.name.substring(1)}
-              </label>
-            );
-          })}
-          {errors.types && <p>{errors.types}</p>}
-        </div>
-        <button disabled={handleActivateButton()} type="submit">
-          Crear Pokemon
-        </button>
       </form>
-      {loader === "SI" ? <p>Cargando...</p> : <p></p>}
+      <div className={s.divLoader}>
+        {loader === "SI" ? <div className={s.loader}></div> : <p></p>}
+      </div>
+      <Link to="/home">
+        <button className={s.buttonVolver}>Volver</button>
+      </Link>
     </div>
   );
 }

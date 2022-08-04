@@ -1,64 +1,65 @@
-.divContenedor{
-display: flex;
-flex: row;
-justify-content: center;
-margin:5px;
-align-items: center;
+.divContenedor {
+  display: flex;
+  flex: row;
+  justify-content: center;
+  margin: 5px;
+  align-items: center;
 }
 
 .inputSearch {
-    border: none;
-    border-radius: 15px;
-    padding: 4px;
-    background-color: #e8e8e8;
-    box-shadow: 6px 6px 12px #ffffff, -6px -6px 12px #c5c5c5;
-    margin: 25px ;
-    width: 300px;
-    height: 25px;
+  border: none;
+  border-radius: 15px;
+  padding: 4px;
+  background-color: #e8e8e8;
+  box-shadow: 6px 6px 12px #ffffff, -6px -6px 12px #c5c5c5;
+  margin: 25px;
+  width: 300px;
+  height: 25px;
 }
 
 .inputSearch:focus {
-    outline-color: white;
+  outline-color: white;
 }
 .inputSearch::placeholder {
-    text-align: center;
+  text-align: center;
 }
 
 .buttonSearch {
-    padding: 15px ;
-    border: unset;
-    border-radius: 15px;
-    color: #212121;
-    z-index: 1;
-    background: #e2f398;
-    position: relative;
-    font-weight: 500;
-    font-size: 14px;
-    -webkit-box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
-    box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
-    transition: all 250ms;
-    overflow: hidden;
+  padding: 15px;
+  border: unset;
+  border-radius: 15px;
+  color: #212121;
+  z-index: 1;
+  background: #e2f398;
+  position: relative;
+  font-weight: 500;
+  font-size: 14px;
+  -webkit-box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
+  box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
+  transition: all 250ms;
+  overflow: hidden;
+  cursor: pointer;
 }
 
 .buttonSearch::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 0;
-    border-radius: 15px;
-    background-color: #212121;
-    z-index: -1;
-    -webkit-box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
-    box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
-    transition: all 250ms
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0;
+  border-radius: 15px;
+  background-color: #212121;
+  z-index: -1;
+  -webkit-box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
+  box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
+  transition: all 250ms;
 }
 
 .buttonSearch:hover {
-    color: #e8e8e8;
+  color: #e8e8e8;
 }
 
 .buttonSearch:hover::before {
-    width: 100%;
+  width: 100%;
 }
