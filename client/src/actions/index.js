@@ -11,12 +11,15 @@ export const GET_DETAIL = "GET_DETAIL";
 export const GET_CLEAN_DETAIL_STATE = "GET_CLEAN_DETAIL_STATE";
 
 export function getPokemons() {
-  return async function (dispatch) {
-    var json = await axios.get("http://localhost:3001/pokemons");
-    return dispatch({
-      type: GET_POKEMONS,
-      payload: json.data,
-    });
+  return function (dispatch) {
+    return fetch("http://localhost:3001/pokemons")
+      .then((respuesta) => respuesta.json())
+      .then((respuestaJson) =>
+        dispatch({
+          type: GET_POKEMONS,
+          payload: respuestaJson,
+        })
+      );
   };
 }
 
@@ -52,22 +55,23 @@ export function orderBy(payload) {
 }
 
 export function getNamePokemons(name) {
-  return async function (dispatch) {
-    try {
-      var json = await axios.get("http://localhost:3001/pokemons?name=" + name);
-
-      return dispatch({
-        type: GET_NAME_POKEMONS,
-        payload: json.data,
+  return function (dispatch) {
+    return fetch("http://localhost:3001/pokemons?name=" + name)
+      .then((respuesta) => respuesta.json())
+      .then((respuestaJson) =>
+        dispatch({
+          type: GET_NAME_POKEMONS,
+          payload: respuestaJson,
+        })
+      )
+      .catch((error) => {
+        console.log(error);
+        alert("Pokemon no encontrado");
+        return dispatch({
+          type: "ERROR_POKEMON_NOT_FOUND",
+          payload: false,
+        });
       });
-    } catch (error) {
-      console.log(error);
-      alert("Pokemon no encontrado");
-      return dispatch({
-        type: "ERROR_POKEMON_NOT_FOUND",
-        payload: false,
-      });
-    }
   };
 }
 
