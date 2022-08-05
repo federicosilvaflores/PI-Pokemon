@@ -128,7 +128,10 @@ pokemonsRouter.get("/:id", async (req, res) => {
           attributes: ["name"],
         },
       });
-      res.status(200).send(db);
+      // sino lo encuentra en la base de datos, responde con "Not Found", si lo encuentra envia el pokemon encontrado
+      if (db === null) {
+        res.status(404).send("Not Found");
+      } else res.status(200).send(db);
     }
   } catch (error) {
     res.status(404).send("Not Found");
