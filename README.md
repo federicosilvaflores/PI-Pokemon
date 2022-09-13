@@ -27,7 +27,6 @@ Features:
 - Show details of each pokemon
 - Refresh the pokemon's list
 - Navigate through different pages
-- Delete pokemons from database
 
 ## Technologies used and documentation
 
@@ -102,32 +101,11 @@ Provides APIs that enable components to interact with the Redux store. Version 7
 
 Thunk middleware allows writing functions with logic inside that can interact with a Redux store's dispatch and getState methods. Version 2.4.1
 
-### `sweetalert2:`
-
-A responsive and customizable replacement for javascript's popup boxes. Version 11.4.0
-
 ### `Back-end dependencies`
 
 ### `axios:`
 
 Promise based HTTP client for the browser and node.js. Version 0.25.0
-
-### `body-parser:`
-
-Node.js body parsing middleware.
-Parse incoming request bodies in a middleware before your handlers, available under the req.body property. Version 1.19.0
-
-### `cookie-parser:`
-
-Parse Cookie header and populate req.cookies with an object keyed by the cookie names. Version 1.4.5
-
-### `cors:`
-
-Node.js package for providing a Connect/Express middleware that can be used to enable CORS with various options. Version 2.8.5
-
-### `dotenv:`
-
-Loads environment variables from a .env file into process.env. Storing configuration in the environment separate from code is based on [The Twelve-Factor App](https://12factor.net/config) methodology. Version 8.2.0
 
 ### `express:`
 
@@ -145,16 +123,8 @@ Non-blocking PostgreSQL client for Node.js. Pure JavaScript and optional native 
 
 Promise-based Node.js ORM tool for Postgres. It features solid transaction support, relations, eager and lazy loading, read replication and more. Version 6.3.5
 
-## Deployment
-
-The app has the backend and database deployed on Heroku and the frontend on Vercel.
-
-[Link](https://pennacchioni-pi.vercel.app/) to visit the app
-
-<img src="./client/public/readmeImage.png"/>
-
 Thanks for your time! I hope you enjoy my project.
 
 ### `Contact:`
 
-[Linkedin](https://www.linkedin.com/in/luciano-pennacchioni/), [github](https://github.com/lucianop3196)
+[Linkedin](https://www.linkedin.com/in/federicosilvaflores/), [github](https://github.com/federicosilvaflores)
