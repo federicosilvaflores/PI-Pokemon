@@ -1,107 +1,160 @@
-![HenryLogo](https://d31uz8lwfmyn8g.cloudfront.net/Assets/logo-henry-white-lg.png)
+<p align='left'>
+    <img src='https://static.wixstatic.com/media/85087f_0d84cbeaeb824fca8f7ff18d7c9eaafd~mv2.png/v1/fill/w_160,h_30,al_c,q_85,usm_0.66_1.00_0.01/Logo_completo_Color_1PNG.webp' </img>
+</p>
 
-# Individual Project - Henry Dogs
+# Individual Project - Pokemon app
 
-<img src="https://user-images.githubusercontent.com/76783198/184228274-40a58435-e797-48ba-b6cf-e52aa99d3329.png"   />
-<img src="https://user-images.githubusercontent.com/76783198/184225656-63eb4e40-4881-48eb-bd86-c027602173a5.png"  />
-<img src="https://user-images.githubusercontent.com/76783198/184225936-7c59268c-39cf-41ad-8814-7c812aebb098.png"   />
+<p align="left">
+  <img height="150" src="./pokemon.png" />
+</p>
 
-## Objetivos del Proyecto
+## Description
 
-- Construir una App utlizando React, Redux, Node y Sequelize.
-- Afirmar y conectar los conceptos aprendidos en la carrera.
-- Aprender mejores prácticas.
-- Aprender y practicar el workflow de GIT.
+Single page application (SPA) to prove the use of differents technologies.
+In this app, pokemons are shown with some of their characteristics.
+The SPA consumes data from an external API [PokeApi](https://pokeapi.co/) through a backend developed in NodeJs using Express, adding new features to the original api
 
-## Contenido
+Moreover, pokemons could be created, with any specification wanted, and stored in database.
 
-Se cuenta con dos carpetas: `api` y `client`. En estas carpetas estará el código del back-end y el front-end respectivamente.
+Features:
 
-## Descripción
+- Search pokemon
+- Create a personalized pokemon
+- Filter pokemons by source (API or database)
+- Filter by type of pokemon
+- Sort pokemons by strength
+- Sort pokemons alphabetically
+- Show details of each pokemon
+- Refresh the pokemon's list
+- Navigate through different pages
+- Delete pokemons from database
 
-La aplicación permite vizualizar las distintas razas de perros de todo el mundo, junto con información relevante de las mismas utilizando la api externa [the dog api](https://thedogapi.com/) y a partir de ella poder, entre otras cosas:
+## Technologies used and documentation
 
-- Buscar perros
-- Filtrarlos / Ordenarlos
-- Agregar nuevas razas de perros
+- [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML)
+- [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)
+- [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+- [React](https://reactjs.org/)
+- [Redux](https://redux.js.org/)
+- [NodeJs](https://nodejs.org/dist/latest-v16.x/docs/api/)
+- [Express](https://expressjs.com/)
+- [Postgres](https://www.postgresql.org/docs/current/) - [Sequelize](https://sequelize.org/v6/)
 
-#### Tecnologías utilizadas
-- Javascript
-- HTML
-- CSS
-- React
-- Redux
-- Express
-- Sequelize - Postgres
+## Pre - requirements
 
-## Frontend
+It is necessary to have at least the latest stable version of Node and NPM. Make sure you have it to be able to correctly install the necessary dependencies to run the project.
 
-__Pagina inicial__
+Required versions are:
 
-__Ruta principal__ consta de :
+- **Node**: 12.18.3 or greater
+- **NPM**: 6.14.16 or greater
 
-- SearchBar para encontrar razas de perros por nombre
-- Listado de razas de perros, que indica:
-  - Imagen
-  - Nombre
-  - Temperamento
-  - Peso
-- Filtros por:
-  - Temperamento
-  - Raza existente (es decir las que vienen de la API) o agregada por nosotros (en la base de datos)
-- Ordenamiento tanto ascendentemente como descendentemente las razas de perro por:
-  - Orden alfabético
-  - Peso
-- Paginado para ir buscando y mostrando las siguientes razas, mostrando 8 razas por página.
+To check which version you have installed:
 
-__Ruta de detalle de raza de perro__ consta de:
+> node -v
+>
+> npm -v
 
-- Imagen
-- Nombre
-- Temperamentos
-- Altura
-- Peso
-- Esperanza de vida
+## Instructions to start the development server
 
-__Ruta de creación de raza de perro__ contiene:
+1. Clone the repository
+2. Create a database in postgres called pokemon
+3. There are two folders: api and client. In these folders will be the back-end and front-end code respectively.
+4. Create a file in api called .env that has the following structure:
 
-- Un formulario __controlado con JavaScript__ con los siguientes campos:
-  - Nombre
-  - Altura (Diferenciando entre altura mínima y máxima)
-  - Peso (Diferenciando entre peso mínimo y máximo)
-  - Años de vida
-- Posibilidad de seleccionar/agregar uno o más temperamentos
-- Botón para crear una nueva raza de perro
+```
+DB_USER=postgresUser
+DB_PASSWORD=postgresPassword
+DB_HOST=localhost
+```
 
-## Backend
+Replace userPostgres and postgresPassword with your own credentials to connect to postgres.
 
-Se desarrollo un servidor en Node/Express con las siguientes rutas:
+5. Run the following commands on the /api and /client folders
 
-- __GET /dogs__:
-  - Obtiene un listado de las razas de perro  
-- __GET /dogs?name="..."__:
-  - Obtiene un listado de las razas de perro que contengan la palabra ingresada como query parameter
-  - Si no existe coincidencia con ninguna raza de perro arroja el mensaje correspondiente
-- __GET /dogs/{idRaza}__:
-  - Obtiene todos los detalles de una raza de perro en particular
-- __POST /dogs__:
-  - Recibe los datos recolectados desde el formulario controlado de la ruta de creación de raza de perro por body
-  - Crea una raza de perro en la base de datos relacionada con sus temperamentos
-- __GET /temperaments__:
-  - Obtiene todos los temperamentos posibles
-  - En una primera instancia los obtiene desde la API externa y luego los guarda en la base de datos para utilizarlos posteriormente
+```
+npm install
 
-## Base de datos
+npm start
+```
 
-El modelo de la base de datos contiene las siguientes entidades:
+6. Finally open http://localhost:3000
 
-- Raza con las siguientes propiedades:
-  - ID
-  - Nombre 
-  - Altura 
-  - Peso 
-  - Años de vida
-- Temperamento con las siguientes propiedades:
-  - ID
-  - Nombre
+## Dependencies installed:
 
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+### `Front-end dependencies`
+
+### `react-router-dom:`
+
+This library was installed to facilitate component's rendering. Installed version 6.2.1.
+
+### `redux:`
+
+Redux centralize the application's state and logic enables powerful capabilities like undo/redo, state persistence. Version 4.1.2
+
+### `react-redux:`
+
+Provides APIs that enable components to interact with the Redux store. Version 7.2.7
+
+### `redux-thunk:`
+
+Thunk middleware allows writing functions with logic inside that can interact with a Redux store's dispatch and getState methods. Version 2.4.1
+
+### `sweetalert2:`
+
+A responsive and customizable replacement for javascript's popup boxes. Version 11.4.0
+
+### `Back-end dependencies`
+
+### `axios:`
+
+Promise based HTTP client for the browser and node.js. Version 0.25.0
+
+### `body-parser:`
+
+Node.js body parsing middleware.
+Parse incoming request bodies in a middleware before your handlers, available under the req.body property. Version 1.19.0
+
+### `cookie-parser:`
+
+Parse Cookie header and populate req.cookies with an object keyed by the cookie names. Version 1.4.5
+
+### `cors:`
+
+Node.js package for providing a Connect/Express middleware that can be used to enable CORS with various options. Version 2.8.5
+
+### `dotenv:`
+
+Loads environment variables from a .env file into process.env. Storing configuration in the environment separate from code is based on [The Twelve-Factor App](https://12factor.net/config) methodology. Version 8.2.0
+
+### `express:`
+
+Back-end web application framework for Node.js. It is designed for building web applications and APIs. Version 4.17.1
+
+### `morgan:`
+
+HTTP request logger middleware for node.js. Version 1.10.0
+
+### `pg:`
+
+Non-blocking PostgreSQL client for Node.js. Pure JavaScript and optional native libpq bindings. Version 8.5.1
+
+### `Sequelize:`
+
+Promise-based Node.js ORM tool for Postgres. It features solid transaction support, relations, eager and lazy loading, read replication and more. Version 6.3.5
+
+## Deployment
+
+The app has the backend and database deployed on Heroku and the frontend on Vercel.
+
+[Link](https://pennacchioni-pi.vercel.app/) to visit the app
+
+<img src="./client/public/readmeImage.png"/>
+
+Thanks for your time! I hope you enjoy my project.
+
+### `Contact:`
+
+[Linkedin](https://www.linkedin.com/in/luciano-pennacchioni/), [github](https://github.com/lucianop3196)
